@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <style>
+        /* Reset default styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Base Layout */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ff8c00; /* Tiger orange background */
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Tiger Stripe Background */
+        .container:before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/4/4c/Tiger_stripes.svg') repeat;
+            opacity: 0.1;
+            border-radius: 10px;
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Link Styling */
+        a {
+            display: block;
+            color: #ff6700;
+            text-decoration: none;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Home Page</h1>
+        <a href="{{ url_for('login') }}">Login Page</a>
+        <a href="{{ url_for('register') }}">Registration Page</a>
+    </div>
+</body>
+
+</html>

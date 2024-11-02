@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* Tiger theme colors */
+        body {
+            background-color: #000; /* Black background */
+            color: #FFA500; /* Orange text */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #FFA500;
+            text-align: center;
+        }
+
+        form {
+            background-color: #333; /* Dark background for form */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #FFA500;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            background-color: #222;
+            color: #FFA500;
+        }
+
+        input[type="submit"] {
+            background-color: #FFA500;
+            color: #000;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #e69500;
+        }
+
+        a {
+            color: #FFA500;
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e69500;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Register Page</h1>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.username }}
+            </div>
+            <div>
+                {{ form.password }}
+            </div>
+            <div>
+                {{ form.submit }}
+            </div>
+        </form>
+
+        <a href="{{ url_for('login') }}">Already have an account? Log In</a>
+    </div>
+</body>
+
+</html>

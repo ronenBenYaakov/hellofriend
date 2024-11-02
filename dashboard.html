@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Reset default styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Base Layout */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ff8c00; /* Tiger orange background */
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Tiger Stripe Background */
+        .container:before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/4/4c/Tiger_stripes.svg') repeat;
+            opacity: 0.1;
+            border-radius: 10px;
+            z-index: -1;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Input Field Styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin-top: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Button Styling */
+        button {
+            margin-top: 1rem;
+            padding: 0.6rem 1.2rem;
+            background-color: #ff6700;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e65c00;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.2rem;
+            background-color: #ff6700;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #e65c00;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Hello, you are logged in.</h1>
+
+        <form id="chatroom-form" onsubmit="return redirectToChatRoom();">
+            <label for="chatroom-id">Chatroom ID:</label>
+            <input type="text" id="chatroom-id" name="chat_id" placeholder="Enter chatroom ID" required>
+            <button type="submit">Join Chatroom</button>
+        </form>
+
+        <a href="{{ url_for('logout') }}">Press here to logout</a>
+    </div>
+
+    <script>
+        function redirectToChatRoom() {
+            const chatId = document.getElementById('chatroom-id').value;
+            const username = '{{ username }}' // passed from Flask
+            // Redirect to the chat room with the specified chat ID
+            window.location.href = `/chat/${username}/${chatId}`;
+            return false; // Prevent the form from submitting normally
+        }
+    </script>
+</body>
+
+</html>

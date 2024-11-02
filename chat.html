@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatroom</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io();
+            const chatId = "{{ chat_id }}";  // Passed from the Flask route
+            const username = "{{ username }}"; // Passed from the Flask route
+            const status = "{{ status }}";
+            const messagesList = document.getElementById('messages');
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const statusDisplay = document.getElementById('status');
+
+            // Set initial status
+            statusDisplay.textContent = `Status: ${status}`;
+
+            // Load initial chat history from the backend
+            fetch(`/get_chat_history/${chatId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const savedMessages = data.messages || [];
+                    savedMessages.forEach(message => {
+                        const messageItem = document.createElement('li');
+                        messageItem.textContent = message.trim();
+                        messagesList.appendChild(messageItem);
+                    });
+                })
+                .catch(error => console.error('Error loading chat history:', error));
+
+            // Send a new message
+            sendButton.addEventListener('click', () => {
+                const message = messageInput.value;
+                if (message.trim() !== "") {
+                    // Send the message to the server
+                    socket.emit('message', { chat_id: chatId, username: username, message: message });
+                    messageInput.value = ''; // Clear input field
+                }
+            });
+
+            // Listen for new messages from the server
+            socket.on('message', (msg) => {
+                const messageItem = document.createElement('li');
+                messageItem.textContent = msg;
+                messagesList.appendChild(messageItem);
+                messagesList.scrollTop = messagesList.scrollHeight; // Auto-scroll to the latest message
+            });
+        });
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; margin: 0; }
+        #chat-container { max-width: 600px; margin: auto; }
+        #messages { list-style-type: none; padding: 0; max-height: 400px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 10px; }
+        #messages li { padding: 5px; border-bottom: 1px solid #eee; }
+        #input-container { display: flex; }
+        #messageInput { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        #sendButton { padding: 10px 15px; margin-left: 5px; border: none; border-radius: 5px; background-color: #FFA500; color: white; cursor: pointer; }
+        #sendButton:hover { background-color: #e69500; }
+        #status { background-color: #f0f0f0; padding: 10px; text-align: center; position: fixed; bottom: 0; width: 100%; border-top: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <h2>Chatroom</h2>
+    <ul id="messages"></ul>
+    <div id="input-container">
+        <input type="text" id="messageInput" placeholder="Type your message here..." autofocus>
+        <button id="sendButton">Send</button>
+    </div>
+</div>
+
+<div id="status">Status: {{ status }}</div>
+
+</body>
+</html>
