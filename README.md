@@ -16,7 +16,7 @@ Developed a chat application that displays chat non toxicity on a scale of 1 to 
 
 - DBMS: MongoDB, SQLAlchemy
 
-- emotion Fetching: Machine learning, Data mining
+- emotion Fetching: Machine learning, Big data
 
 - Containerization: Docker
 
